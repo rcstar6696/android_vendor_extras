@@ -6,6 +6,7 @@ B_FAMILY := msm8226 msm8610 msm8974
 B64_FAMILY := msm8992 msm8994
 BR_FAMILY := msm8909 msm8916
 UM_FAMILY := msm8937 msm8953 msm8996
+UM_4_4_FAMILY := msm8998 sdm660
 
 BOARD_USES_ADRENO := true
 
@@ -29,7 +30,7 @@ endif
 TARGET_USES_QCOM_MM_AUDIO := true
 
 # Enable color metadata for 8xx UM targets
-ifneq ($(filter msm8996 msm8998,$(TARGET_BOARD_PLATFORM)),)
+ifneq ($(filter msm8996 msm8998 sdm660,$(TARGET_BOARD_PLATFORM)),)
     TARGET_USES_COLOR_METADATA := true
 endif
 
@@ -63,7 +64,11 @@ else
 ifeq ($(call is-board-platform-in-list, $(UM_FAMILY)),true)
     QCOM_HARDWARE_VARIANT := msm8996
 else
+ifeq ($(call is-board-platform-in-list, $(UM_4_4_FAMILY)),true)
+    QCOM_HARDWARE_VARIANT := msm8998
+else
     QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
+endif
 endif
 endif
 endif
